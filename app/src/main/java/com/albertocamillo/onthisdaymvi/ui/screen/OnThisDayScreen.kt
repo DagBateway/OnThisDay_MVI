@@ -15,11 +15,24 @@ import com.albertocamillo.onthisdaymvi.mvi.viewmodel.OnThisDayViewModel
 
 import java.time.format.DateTimeFormatter
 
+// ============================
+// OnThisDayScreen.kt
+// ============================
+/**
+ * Jetpack Compose UI screen that renders the "On This Day" events.
+ *
+ * It displays the current selected date, lets the user navigate between days,
+ * and shows a list of historical events. It also supports tapping on events
+ * to show a detail dialog.
+ *
+ * Observes state from [OnThisDayViewModel] and triggers [OnThisDayIntent]s.
+ */
+
 @Composable
 fun OnThisDayScreen(viewModel: OnThisDayViewModel = viewModel()) {
     val state by viewModel.state.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxSize().systemBarsPadding().padding(16.dp)) {
         // Date and navigation
         Row(
             Modifier.fillMaxWidth(),
@@ -40,11 +53,13 @@ fun OnThisDayScreen(viewModel: OnThisDayViewModel = viewModel()) {
         Spacer(Modifier.height(16.dp))
 
         when {
-            state.isLoading -> CircularProgressIndicator()
+            state.isLoading -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
             state.error != null -> Text("Error: ${state.error}")
             state.data != null -> {
                 LazyColumn {
-                    items(state.data!!.events) { event ->
+                    items(state.data?.events.orEmpty()) { event ->
                         Text(
                             text = "${event.year}: ${event.text}",
                             modifier = Modifier

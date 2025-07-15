@@ -6,6 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
+// ============================
+// AppDatabase.kt
+// ============================
+/**
+ * The Room database for the app. It holds the [OnThisDayDao] and is responsible
+ * for providing access to the local SQLite database.
+ *
+ * It's a singleton accessed via [getDatabase] and ensures there's only one instance
+ * per app lifecycle. It stores JSON responses in [OnThisDayEntity] format.
+ *
+ * Room handles migrations and lifecycle automatically. This file binds the DAO interface
+ * to the database.
+ */
+
 @Database(entities = [OnThisDayEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

@@ -17,6 +17,20 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+// ============================
+// OnThisDayViewModel.kt
+// ============================
+/**
+ * Core logic controller for the MVI architecture.
+ *
+ * It manages state with [StateFlow], handles all [OnThisDayIntent]s,
+ * performs API/network operations via [ApiClient], and uses [OnThisDayDao] for local caching.
+ *
+ * This ViewModel ensures the app works offline by attempting to load from cache first,
+ * and updates state accordingly for Compose UI to render.
+ */
+
+
 class OnThisDayViewModel(
     private val dao: OnThisDayDao
 ) : ViewModel() {
