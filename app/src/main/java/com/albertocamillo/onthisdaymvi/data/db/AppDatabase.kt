@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.albertocamillo.onthisdaymvi.data.db.AppDatabase.Companion.getDatabase
 
 // ============================
 // AppDatabase.kt
@@ -26,7 +27,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun onThisDayDao(): OnThisDayDao
 
     companion object {
-        @Volatile private var INSTANCE: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {

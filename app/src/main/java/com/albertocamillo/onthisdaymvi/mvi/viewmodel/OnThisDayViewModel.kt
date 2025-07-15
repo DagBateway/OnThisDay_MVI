@@ -50,6 +50,7 @@ class OnThisDayViewModel(
             is OnThisDayIntent.SelectEvent -> _state.update {
                 it.copy(selectedEvent = intent.event)
             }
+
             is OnThisDayIntent.ClearSelectedEvent -> _state.update {
                 it.copy(selectedEvent = null)
             }
@@ -83,7 +84,10 @@ class OnThisDayViewModel(
 
             } catch (e: Exception) {
                 _state.update {
-                    it.copy(isLoading = false, error = "No connection and no cached data available.")
+                    it.copy(
+                        isLoading = false,
+                        error = "No connection and no cached data available."
+                    )
                 }
             }
         }

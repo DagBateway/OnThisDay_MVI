@@ -1,19 +1,36 @@
 package com.albertocamillo.onthisdaymvi.ui.screen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.albertocamillo.onthisdaymvi.mvi.intent.OnThisDayIntent
 import com.albertocamillo.onthisdaymvi.mvi.viewmodel.OnThisDayViewModel
-
 import java.time.format.DateTimeFormatter
 
 // ============================
@@ -33,7 +50,10 @@ import java.time.format.DateTimeFormatter
 fun OnThisDayScreen(viewModel: OnThisDayViewModel = viewModel()) {
     val state by viewModel.state.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize().systemBarsPadding().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .systemBarsPadding()
+        .padding(16.dp)) {
         // Date and navigation
         Row(
             Modifier.fillMaxWidth(),
@@ -54,9 +74,13 @@ fun OnThisDayScreen(viewModel: OnThisDayViewModel = viewModel()) {
         Spacer(Modifier.height(16.dp))
 
         when {
-            state.isLoading -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            state.isLoading -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
                 CircularProgressIndicator()
             }
+
             state.error != null -> Text("Error: ${state.error}")
             state.data != null -> {
                 LazyColumn {

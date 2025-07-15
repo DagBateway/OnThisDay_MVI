@@ -19,5 +19,6 @@ class Converters {
     fun fromDate(date: LocalDate): String = date.format(DateTimeFormatter.ofPattern("MM-dd"))
 
     @TypeConverter
-    fun toDate(dateString: String): LocalDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("MM-dd"))
+    fun toDate(dateString: String): LocalDate =
+        LocalDate.parse(dateString, DateTimeFormatter.ofPattern("MM-dd"))
 }
