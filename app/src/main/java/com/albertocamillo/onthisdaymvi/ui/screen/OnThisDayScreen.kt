@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -60,15 +61,33 @@ fun OnThisDayScreen(viewModel: OnThisDayViewModel = viewModel()) {
             state.data != null -> {
                 LazyColumn {
                     items(state.data?.events.orEmpty()) { event ->
-                        Text(
-                            text = "${event.year}: ${event.text}",
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(vertical = 6.dp)
                                 .clickable {
                                     viewModel.handleIntent(OnThisDayIntent.SelectEvent(event))
-                                }
-                                .padding(8.dp)
-                        )
+                                },
+                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            )
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = event.year.toString(),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = event.text,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
                     }
                 }
             }
