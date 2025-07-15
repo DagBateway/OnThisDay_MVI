@@ -1,8 +1,12 @@
 # On This Day — MVI Android App
 
-This Android application displays notable historical events, births, deaths, and holidays for any given date using the [Wikimedia On This Day API](https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/{month}/{day}).
+This Android application displays notable historical events, births, deaths, and holidays for any
+given date using
+the [Wikimedia On This Day API](https://api.wikimedia.org/wiki/Feed_API/Reference/On_this_day).
 
-It is built entirely in **Jetpack Compose**, follows the **MVI (Model-View-Intent)** architectural pattern, and includes **offline caching** using **Room**. The app is designed as a clean, modern example of scalable Android architecture using Kotlin, coroutines, Retrofit, and Compose.
+It is built entirely in **Jetpack Compose**, follows the **MVI (Model-View-Intent)** architectural
+pattern, and includes **offline caching** using **Room**. The app is designed as a clean, modern
+example of scalable Android architecture using Kotlin, coroutines, Retrofit, and Compose.
 
 ---
 
@@ -10,7 +14,8 @@ It is built entirely in **Jetpack Compose**, follows the **MVI (Model-View-Inten
 
 The goal of this project is to:
 
-- Demonstrate a practical implementation of the **Model-View-Intent (MVI)** pattern in a Compose-based Android app
+- Demonstrate a practical implementation of the **Model-View-Intent (MVI)** pattern in a
+  Compose-based Android app
 - Consume a public REST API in a clean and testable way
 - Handle **state management** predictably and robustly
 - Support **offline access** using Room for previously viewed dates
@@ -22,19 +27,24 @@ The goal of this project is to:
 ## 🧭 What is MVI (Model-View-Intent)?
 
 ### Overview
-**MVI** is a software architecture pattern that focuses on **unidirectional data flow**, **immutability**, and a **single source of truth** for UI state. It encourages thinking in terms of **state transitions** and **event-driven updates**.
 
-It is particularly useful with reactive frameworks like Jetpack Compose or RxJava, where the UI reacts to state changes and user events are modeled as pure inputs.
+**MVI** is a software architecture pattern that focuses on **unidirectional data flow**, *
+*immutability**, and a **single source of truth** for UI state. It encourages thinking in terms of *
+*state transitions** and **event-driven updates**.
+
+It is particularly useful with reactive frameworks like Jetpack Compose or RxJava, where the UI
+reacts to state changes and user events are modeled as pure inputs.
 
 ### Key Concepts
 
-| Component | Purpose |
-|----------|---------|
-| **Model** | Holds the application state (typically in a `data class`) and business logic. It is updated via state transitions. |
-| **View** | Pure UI that displays the current state. It observes changes to the model and renders them declaratively. |
+| Component  | Purpose                                                                                                                  |
+|------------|--------------------------------------------------------------------------------------------------------------------------|
+| **Model**  | Holds the application state (typically in a `data class`) and business logic. It is updated via state transitions.       |
+| **View**   | Pure UI that displays the current state. It observes changes to the model and renders them declaratively.                |
 | **Intent** | Describes a user interaction or event (e.g. clicking a button, navigating a date). Intents trigger updates to the model. |
 
 ### Visual Flow:
+
 ```
 [User Action]
      ↓
@@ -42,7 +52,9 @@ It is particularly useful with reactive frameworks like Jetpack Compose or RxJav
                              ▲          │
                              └──────────┘
 ```
-The View emits **Intents**, which are handled by the ViewModel. The ViewModel processes them (via API, DB, logic), updates the **State**, which the **View** observes.
+
+The View emits **Intents**, which are handled by the ViewModel. The ViewModel processes them (via
+API, DB, logic), updates the **State**, which the **View** observes.
 
 This loop is predictable, testable, and avoids shared mutable state.
 
@@ -52,14 +64,15 @@ This loop is predictable, testable, and avoids shared mutable state.
 
 This app implements a basic MVI architecture using Kotlin + Jetpack Compose + StateFlow.
 
-| Layer        | Implementation                                                                 |
-|--------------|----------------------------------------------------------------------------------|
-| **Intent**   | `OnThisDayIntent.kt`: all user-driven actions like navigating dates or selecting an event |
-| **Model**    | `OnThisDayViewModel.kt`: handles logic, fetches data, manages state with `MutableStateFlow` |
-| **State**    | `OnThisDayState.kt`: a full snapshot of the UI’s data, error, and selection states |
-| **View**     | `OnThisDayScreen.kt`: stateless UI, observes `StateFlow` and triggers intents |
+| Layer      | Implementation                                                                              |
+|------------|---------------------------------------------------------------------------------------------|
+| **Intent** | `OnThisDayIntent.kt`: all user-driven actions like navigating dates or selecting an event   |
+| **Model**  | `OnThisDayViewModel.kt`: handles logic, fetches data, manages state with `MutableStateFlow` |
+| **State**  | `OnThisDayState.kt`: a full snapshot of the UI’s data, error, and selection states          |
+| **View**   | `OnThisDayScreen.kt`: stateless UI, observes `StateFlow` and triggers intents               |
 
 ### Example:
+
 1. User clicks "Next Day" → emits `Intent.NextDate`
 2. ViewModel handles this by updating the selected date and loading events
 3. ViewModel updates `State` → triggers recomposition in Compose
@@ -126,15 +139,18 @@ com.albertocamillo.onthisdaymvi
 ## 🧑‍🏫 When to Use MVI (and When Not To)
 
 ### ✅ Good for:
+
 - Complex UIs with multiple data sources
 - UIs requiring **predictable behaviour** and **clear data flow**
 - Apps where **testability** and **debuggability** are priorities
 
 ### ❌ Overkill for:
+
 - Extremely simple apps (e.g. single screen, no data)
 - Apps that don't need strict separation of logic
 
-That said, this app uses MVI in a **minimal yet real-world useful way** — perfect for medium-sized apps.
+That said, this app uses MVI in a **minimal yet real-world useful way** — perfect for medium-sized
+apps.
 
 ---
 
